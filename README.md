@@ -11,6 +11,7 @@ myKey=<script>alert("SOS! - Golang Brazil 2022")</script>
 ## Tools
 
 - https://github.com/golangci/golangci-lint
+- https://github.com/securego/gosec
 - https://staticcheck.io/
 
 

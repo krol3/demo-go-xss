@@ -17,3 +17,6 @@ test-integration:
 
 linter:
 	 golangci-lint run
+
+gosec:
+	gosec  ./...
