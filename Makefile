@@ -20,3 +20,9 @@ linter:
 
 gosec:
 	gosec  ./...
+
+build-image:
+	docker build -t krol/demo:demo .
+
+semgrep:
+	semgrep --config=auto .

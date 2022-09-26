@@ -42,7 +42,7 @@ func xssInsecure(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var user1 = &User{1, "my.email@gmail.com", "golang.brazil#123"}
+	var user1 = &User{1, "my.email@gmail.com", "golang.brazil#password"}
 	var tmpl = fmt.Sprintf(`
 <html>
 <head>

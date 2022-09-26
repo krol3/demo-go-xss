@@ -56,7 +56,7 @@ jobs:
       run: make test-integration
 
   security:
-    name: Code security
+    name: Code scanning
     runs-on: ubuntu-latest
     steps:  
     - name: Check out code into the Go module directory
@@ -72,8 +72,41 @@ jobs:
       with:
         version: v1.49
         args: --deadline=30m
-        skip-cache: true # https://github.com/golangci/golangci-lint-action/issues/244#issuecomment-1052197778
+        skip-cache: true 
     - uses: dominikh/staticcheck-action@v1.2.0
       continue-on-error: true
       with:
-        version: "2022.1"            
+        version: "2022.1"
+
+  semgrep:
+    name: Scan with semgrep
+    runs-on: ubuntu-20.04
+    container:
+      image: returntocorp/semgrep
+    # Skip any PR created by dependabot to avoid permission issues:
+    if: (github.actor != 'dependabot[bot]')
+    steps:
+      # Fetch project source with GitHub Actions Checkout.
+      - uses: actions/checkout@v3
+      # Run the "semgrep ci" command on the command line of the docker image.
+      - run: semgrep ci
+        env:
+           # Add the rules that Semgrep uses by setting the SEMGREP_RULES environment variable. 
+           SEMGREP_RULES: p/default # more at semgrep.dev/explore
+
+  image:
+    name: Image scanning
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v3    
+    - name: Build image
+      run: make build-image                    
+    - name: Trivy vulnerability scanner
+      id: trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'image'
+        image-ref: 'krol/demo:demo'
+        scan-ref: '.'
+        trivy-config: trivy.yaml   
