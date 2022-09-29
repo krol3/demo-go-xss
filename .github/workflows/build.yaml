@@ -78,8 +78,8 @@ jobs:
       with:
         version: "2022.1"
 
-  semgrep:
-    name: Scan with semgrep
+  semgrep-sast:
+    name: SAST with semgrep
     runs-on: ubuntu-20.04
     container:
       image: returntocorp/semgrep
