@@ -94,6 +94,15 @@ jobs:
            # Add the rules that Semgrep uses by setting the SEMGREP_RULES environment variable. 
            SEMGREP_RULES: p/default # more at semgrep.dev/explore
 
+  supply-chain:
+    name: Supply security with chain-bench
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v3
+    - name: Run integration tests
+      run: make chain-bench
+
   image:
     name: Image scanning
     runs-on: ubuntu-latest

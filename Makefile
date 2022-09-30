@@ -15,6 +15,9 @@ test:
 test-integration:
 	echo "Integration Testing echo"
 
+chain-bench:
+	echo "Add chain bench"
+
 linter:
 	 golangci-lint run
 
